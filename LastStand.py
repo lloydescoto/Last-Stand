@@ -31,6 +31,12 @@ def copyrightMessage(text):
     textRect.x = 5
     textRect.y = 580
     screen.blit(textSurf,textRect)
+def controlMessage(text):
+    smallFont = pygame.font.SysFont("Arial", 25)
+    textSurf, textRect = makeTextObjects(text,smallFont)
+    textRect.x = 640
+    textRect.y = 550
+    screen.blit(textSurf,textRect)
 class Player(pygame.sprite.Sprite):
     equipment = ["Gun","Tower","Wall","Mine"]
     equipmentCounter = 1
@@ -420,6 +426,7 @@ def Menu():
         instruct = screen.blit(instructionImage, (720,535))
         cancel = screen.blit(cancelImage, (760,15))
         copyrightMessage("(c) Copyright Disclaimer. Credits to all images owner.")
+        controlMessage("Controls");
         pygame.display.flip()
         clock.tick(60)
 def Gameover():
@@ -474,11 +481,12 @@ def Instruction():
                     soundBG.stop()
                     Menu()
         screen.blit(backgroundImage, [0, 0])
-        back = screen.blit(backImage,(720,535))
+        back = screen.blit(backImage,(720,525))
         copyrightMessage("(c) Copyright Disclaimer. Credits to all images owner.")
         pygame.display.flip()
         clock.tick(60)
 def Game():
+    global back
     keepGoing = True
     clock = pygame.time.Clock()
     bullets = pygame.sprite.Group()
@@ -490,6 +498,7 @@ def Game():
     bosses = pygame.sprite.Group()
     allSprite = pygame.sprite.RenderUpdates()
     backgroundImage = pygame.transform.scale(pygame.image.load("Sprites\Background.png"),(800,600))
+    backImage = pygame.transform.scale(pygame.image.load("Sprites\Back.png"), (32, 32))
     Castle.containers = allSprite
     Player.containers = allSprite
     Bullet.containers = allSprite, bullets
@@ -512,6 +521,7 @@ def Game():
     waveImage = pygame.image.load("Sprites\Skull.png")
     treasureImage = pygame.transform.scale(pygame.image.load("Sprites\Treasure.png"),(24,24))
     handImage = pygame.transform.scale(pygame.image.load("Sprites\Hand.png"),(24,24))
+
     wave = Wave()
     soundBG.play(-1)
     soundBG.set_volume(0.3)
@@ -531,17 +541,24 @@ def Game():
                 quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 player.shoot = 1
+                if back.collidepoint(event.pos):
+                    soundBG.stop()
+                    Menu()
             if event.type == pygame.MOUSEBUTTONUP:
                 player.shoot = 0
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     player.change()
+                if event.key == pygame.K_ESCAPE:
+                    soundBG.stop()
+                    Menu()
         screen.fill((255,255,255))
         screen.blit(backgroundImage,(0,0))
         screen.blit(waveImage,(20,20))
         screen.blit(treasureImage,(20,60))
         screen.blit(handImage,(20,100))
         screen.blit(player.equipImage,(50,100))
+        back = screen.blit(backImage, (750, 550))
         waveMessage(str(wave.wave + 1))
         goldMessage(str(player.gold))
         copyrightMessage("(c) Copyright Disclaimer. Credits to all images owner.")
@@ -584,6 +601,7 @@ def Game():
             if player.hand == "Gun":
                 if now - player.last >= player.cooldown:
                     soundShot.play()
+                    soundShot.set_volume(1);
                     player.last = now
                     bullets.add(Bullet(player.rect.center,player.angle))
         if keypress[pygame.K_SPACE]:
