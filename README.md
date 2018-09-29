@@ -5,11 +5,11 @@ A Final Requirement for 62DGAME Course
 Defend your final base for the incoming enemies.
 
 # Controls
-W,A,S,D - Move Character
-Left Mouse-Click - Shoot
-Space - Plant turrets, walls, mines
-Q - Change Carrying Items
-N - Call/Next Wave
+- [W,A,S,D]Move Character
+- [Left Mouse-Click]Shoot
+- [Space]Plant turrets, walls, mines
+- [Q]Change Carrying Items
+- [N]Call/Next Wave
 
 # Project Dependencies
 1. Pygame
