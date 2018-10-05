@@ -17,3 +17,6 @@ Defend your final base for the incoming enemies.
 # Developers
 - Lloyd Ivan Escoto(Team Lead, Back-End)
 - Franz Angelo Stephen Panlilio(Graphics Designer, Front-End)
+
+# License
+GNU Affero General Public License v3.0. For a more detailed explanation, check it out [here.](https://github.com/lloydescoto22/Last-Stand/blob/master/LICENSE)
